@@ -1,0 +1,15 @@
+{
+    "parser": "babel-eslint",
+        "env": {
+            "browser": true
+        },
+        "extends": [
+            "google"
+        ],
+        "rules": {
+            // overrides
+            "require-jsdoc": 0,
+            "object-curly-spacing": ["error", "always"],
+            "react/prop-types": 0
+        }
+}
