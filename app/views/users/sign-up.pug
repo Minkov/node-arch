@@ -1,0 +1,8 @@
+extends ../_shared/base
+block content
+    form(method="POST", action="/users/sign-up")
+        input(type="text", name="username", placeholder="Enter username")
+
+        button
+            |   Sign up
+            

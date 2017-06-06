@@ -1,0 +1,9 @@
+extends ../_shared/base
+block content
+    h1
+        | Users
+
+    ul
+        for user in model.items
+            li
+                =user.username

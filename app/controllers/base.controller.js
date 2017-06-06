@@ -24,11 +24,12 @@ class BaseController {
 
     async create(req, res) {
         let item = req.body;
-        console.log(item);
 
-        if (!this._isModelValid(item)) {
-            return res.render('404', { error: 'Invalid model' });
+        if (this._isModelValid && !(await this._isModelValid(item))) {
+            return res.render('400', { error: 'Invalid model' });
         }
+
+        await this.data.create(item);
 
         try {
             res.redirect('/');
@@ -36,7 +37,6 @@ class BaseController {
             return res.render('404', { error: ex });
         }
     }
-
 
     _isModelValid(model) {
         return true;

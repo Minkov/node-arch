@@ -2,6 +2,23 @@
 # yarn lockfile v1
 
 
+"@types/bson@*":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@types/bson/-/bson-1.0.3.tgz#6c26f0876bf9d8cbb06edd4019e29354bf3a03e0"
+  dependencies:
+    "@types/node" "*"
+
+"@types/mongodb@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-2.2.3.tgz#63166dddbb047f35260d0dcd523178adca9cc25e"
+  dependencies:
+    "@types/bson" "*"
+    "@types/node" "*"
+
+"@types/node@*":
+  version "7.0.27"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.27.tgz#ba5e1a87aca2b4f5817289615ffe56472927687e"
+
 abbrev@1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.0.tgz#d0554c2256636e2f56e7c2e5ad183f859428d81f"

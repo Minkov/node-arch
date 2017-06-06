@@ -9,6 +9,8 @@ const { UsersController } = require('./controllers/users.controller');
 const { BaseRouter } = require('./routers/base.router');
 const { UsersRouter } = require('./routers/users.router');
 
+const { GenericDbData } = require('./data/generic.db.data');
+
 let app = express();
 
 app.use(bodyParser.json());
@@ -22,11 +24,19 @@ app.get('/', (req, res) => {
     return res.render('home');
 });
 
-new BaseRouter('/items', new ItemsController())
-    .attachToApp(app);
+const initApp = async () => {
+    const { MongoClient } = require('mongodb');
+    let db = await MongoClient.connect('mongodb://localhost/items-2');
+    let itemsData = new GenericDbData(db, 'Items');
+    let usersData = new GenericDbData(db, 'Users');
+    new BaseRouter('/items', new ItemsController(itemsData))
+        .attachToApp(app);
 
-new UsersRouter('/users', new UsersController())
-    .attachToApp(app);
+    new UsersRouter('/users', new UsersController(usersData))
+        .attachToApp(app);
+};
 
 const port = 3001;
 app.listen(port, () => console.log(`App runnig at :${port}`));
+
+initApp();
