@@ -1,4 +1,6 @@
-form(action="/items", method="POST")
-    input(placeholder="Enter text", name="text")
-    button
-        | Submit
+extends ../_shared/base
+block content
+    form(action="/items", method="POST")
+        input(placeholder="Enter text", name="text")
+        button
+            | Submit

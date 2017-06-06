@@ -12,9 +12,12 @@ class ItemsData {
 
     async create(item) {
         item.id = uuid.v4();
-        console.log(item);
         items.push(item);
         return item;
+    }
+
+    async getById(id) {
+        return items.find((item) => item.id === id);
     }
 }
 

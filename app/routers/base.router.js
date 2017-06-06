@@ -6,8 +6,11 @@ class BaseRouter {
         this.controller = controller;
     }
 
-    attachToApp(app) {
-        let router = new express.Router();
+    attachToApp(app, router) {
+        if (!router) {
+            router = new express.Router();
+        }
+
         router.get('/', (req, res) => {
             this.controller.listAll(req, res);
         })
@@ -20,10 +23,6 @@ class BaseRouter {
             .post('/', (req, res) => {
                 this.controller.create(req, res);
             });
-
-        this.controller.additionalRoutes.forEach((route) => {
-            router[route.method](route.link, route.callback);
-        });
 
         app.use(this.prefix, router);
         return this;
