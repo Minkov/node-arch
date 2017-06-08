@@ -30,12 +30,9 @@ class BaseController {
         }
 
         await this.data.create(item);
-
-        try {
-            res.redirect('/');
-        } catch (ex) {
-            return res.render('404', { error: ex });
-        }
+        
+        res.redirect('/');
+        return res.render('404', { error: ex });
     }
 
     _isModelValid(model) {

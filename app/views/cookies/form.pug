@@ -1,0 +1,6 @@
+extends ../_shared/base
+block content
+    form(action="/cookies", method="POST")
+        input(placeholder="Enter text", name="name")
+        button
+            | Submit

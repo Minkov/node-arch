@@ -1,16 +1,19 @@
 class GenericDbData {
-    constructor(db, collectionName) {
+    constructor(db, Class) {
         this.db = db;
-        this.collectionName = collectionName.toLowerCase();
+        this.Class = Class;
+        this.collectionName = this.Class.name.toLowerCase() + 's';
         this.collection = this.db.collection(this.collectionName);
     }
 
     async getAll() {
-        return this.collection.find({}).toArray();
+        let all = this.collection.find({}).toArray()
+            .then((docs) => docs.map((doc) => this.Class.fromDocument(doc)));
+        return all;
     }
 
     async getById(id) {
-        return this.collection.findOne({ _id: id });
+        return this.Class.fromDocument(this.collection.findOne({ _id: id }));
     }
 
     async search(props = {}) {

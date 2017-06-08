@@ -1,18 +1,10 @@
-const { GenericDbData } = require('./data/generic.db.data');
+const { Cookie } = require('./models/cookie.model');
+const { Item } = require('./models/item.model');
 
-const { MongoClient } = require('mongodb');
+let model = new Item();
+model.id = 5;
+model.name = 'Cookie';
+model.size = 123;
 
-const test = async () => {
-    let db = await MongoClient.connect('mongodb://localhost/test');
-    let data = new GenericDbData(db, 'Items');
-    let result = await data.create({ text: 'Coki' });
-    console.log(result);
-
-    let items = await data.getAll();
-    console.log(items);
-};
-
-test();
-
-
-
+console.log(model.toDocument());
+console.log(Item.fromDocument(model.toDocument()));

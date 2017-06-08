@@ -2,6 +2,7 @@ const { BaseRouter } = require('./base.router');
 const express = require('express');
 
 class UsersRouter extends BaseRouter {
+
     constructor(prefix, controller) {
         super(prefix, controller);
         this.additionalRoutes = [{
