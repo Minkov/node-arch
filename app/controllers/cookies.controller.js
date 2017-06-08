@@ -1,31 +1,24 @@
-const { BaseController } = require('./base.controller');
+const { ModelController } = require('./model.controller');
 
-const cookies = [{
-    name: 'Geri',
-}, {
-    name: 'Hrisi',
-}];
+const { Cookie } = require('../models/cookie.model');
 
-const data = {
-    async getAll() {
-        return cookies;
-    },
-
-    async create(cookie) {
-        cookies.push(cookie);
-        return cookie;
-    },
-};
-
-class CookiesController extends BaseController {
-    constructor() {
-        super(data, 'cookies');
+class CookiesController extends ModelController {
+    constructor(db) {
+        super(db);
     }
 
-    async listAll(req, res) {
-        let model = { items: cookies };
-        const viewName = `${this.viewsDir}/all-cookies`;
-        res.render(viewName, { model });
+    static get ModelType() {
+        return Cookie;
+    }
+
+    _isModelValid(model) {
+        return (typeof model !== 'undefined') &&
+            (typeof model.size !== 'undefined' &&
+                !isNaN(+model.size)) &&
+            (typeof model.name === 'string' &&
+             model.name.length > 4);
+
+        return isSizeValid && isNameString;
     }
 }
 

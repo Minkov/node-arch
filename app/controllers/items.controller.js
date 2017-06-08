@@ -1,8 +1,14 @@
-const BaseController = require('./base.controller').BaseController;
+const { ModelController } = require('./model.controller');
 
-class ItemsController extends BaseController {
-    constructor(data) {
-        super(data, 'items');
+const { Item } = require('../models/item.model');
+
+class ItemsController extends ModelController {
+    constructor(db) {
+        super(db);
+    }
+
+    static get ModelType() {
+        return Item;
     }
 }
 

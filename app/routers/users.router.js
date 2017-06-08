@@ -1,10 +1,9 @@
-const { BaseRouter } = require('./base.router');
+const { Router } = require('./routers');
 const express = require('express');
 
-class UsersRouter extends BaseRouter {
-
-    constructor(prefix, controller) {
-        super(prefix, controller);
+class UsersRouter extends Router {
+    constructor(controller) {
+        super(controller);
         this.additionalRoutes = [{
             method: 'get',
             link: '/sign-up',
@@ -16,7 +15,7 @@ class UsersRouter extends BaseRouter {
         }];
     }
 
-    attachToApp(app, router) {
+    attachToApp(app, route, router) {
         if (!router) {
             router = new express.Router();
         }
@@ -25,7 +24,7 @@ class UsersRouter extends BaseRouter {
             router[route.method](route.link, route.callback);
         });
 
-        super.attachToApp(app, router);
+        super.attachToApp(app, route, router);
 
         return this;
     }

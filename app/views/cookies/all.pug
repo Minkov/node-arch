@@ -1,0 +1,11 @@
+extends _shared/base
+block cookieContent
+
+    ul
+        for cookie in model.items
+            li
+                strong
+                    =cookie.name
+                |  has size of 
+                span
+                    =cookie.size

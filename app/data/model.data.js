@@ -1,7 +1,8 @@
-class GenericDbData {
-    constructor(db, collectionName) {
+class ModelData {
+    constructor(db, ModelType) {
         this.db = db;
-        this.collectionName = collectionName.toLowerCase();
+        this.ModelType = ModelType;
+        this.collectionName = this.ModelType.name.toLowerCase() + 's';
         this.collection = this.db.collection(this.collectionName);
     }
 
@@ -24,4 +25,4 @@ class GenericDbData {
     }
 }
 
-module.exports = { GenericDbData };
+module.exports = { ModelData };

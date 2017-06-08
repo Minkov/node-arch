@@ -1,8 +1,10 @@
 extends ../_shared/base
 block content
     form(method="POST", action="/users/sign-up")
-        input(type="text", name="username", placeholder="Enter username")
+        input.form-control(type="text", name="username", placeholder="Enter username" value="DonchoMinkov")
+        input.form-control(type="email", name="email", placeholder="Enter email" value="Doncho@minkov.it")
+        input.form-control(type="password", name="password", placeholder="Enter password" value="123456qw")
 
-        button
+        button.btn.btn-success
             |   Sign up
             

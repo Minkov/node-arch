@@ -1,12 +1,12 @@
 class BaseController {
-    constructor(data, viewsDir) {
-        this.data = data;
+    constructor(viewsDir) {
         this.viewsDir = viewsDir;
         this.additionalRoutes = [];
     }
 
     async listAll(req, res) {
-        let items = await this.data.getAll();
+        const items = await this._getAll();
+
         let viewName = `${this.viewsDir}/all`;
         let model = { items };
 
@@ -14,7 +14,11 @@ class BaseController {
     }
 
     async details(req, res) {
-        let item = await this.data.getById(req.params.id);
+        // let item = await this.data.getById(req.params.id);
+        const item = await this._getDetails(req.params.id);
+        const viewName = `${this.viewsDir}/details`;
+        const model = { item };
+        return res.render(viewName, { model });
     }
 
     async getForm(req, res) {
@@ -23,20 +27,26 @@ class BaseController {
     }
 
     async create(req, res) {
-        let item = req.body;
-
-        if (this._isModelValid && !(await this._isModelValid(item))) {
-            return res.render('400', { error: 'Invalid model' });
+        console.log(' --- BaseController --- ');
+        try {
+            await this._create(req.body);
+            res.redirect('/');
+        } catch (ex) {
+            console.log(ex);
+            return res.render('404', { error: ex });
         }
-
-        await this.data.create(item);
-        
-        res.redirect('/');
-        return res.render('404', { error: ex });
     }
 
-    _isModelValid(model) {
-        return true;
+    async _create(item) {
+        throw new Error('Not implemented');
+    }
+
+    async _getAll() {
+        throw new Error('Not implemented');
+    }
+
+    async _getDetails(id) {
+        throw new Error('Not implemented');
     }
 }
 

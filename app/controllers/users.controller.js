@@ -1,14 +1,22 @@
-const { BaseController } = require('./base.controller');
+const { ModelController } = require('./model.controller');
+
+const { User } = require('../models/user.model');
 
 const { validator } = require('../utils/validator');
 
-const VALID_CHARS = 'qwertyuiopasdfghjklzxcvbnm1234567890_.QWERTYUIOPASDFGHJKLZXCVBBNM';
+const VALID_CHARS =
+    'qwertyuiopasdfghjklzxcvbnm1234567890_.QWERTYUIOPASDFGHJKLZXCVBBNM';
+
 const MIN_LENGTH = 3;
 const MAX_LENGTH = 20;
 
-class UsersController extends BaseController {
-    constructor(data) {
-        super(data, 'users');
+class UsersController extends ModelController {
+    constructor(db) {
+        super(db);
+    }
+
+    static get ModelType() {
+        return User;
     }
 
     async signUpForm(req, res) {
@@ -34,12 +42,6 @@ class UsersController extends BaseController {
         }
 
         return true;
-
-        // let users = await this.data.search({
-        //     username: model.username.toLowerCase(),
-        // });
-
-        // return users.length === 0;
     }
 }
 

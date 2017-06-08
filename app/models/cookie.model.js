@@ -1,14 +1,11 @@
-const { BaseModel } = require('./base.model');
+const { Model } = require('./model');
 
-const properties = [{
-    name: 'name',
-    type: Number
-}];
+const properties = ['name', 'size'];
 
-class Cookie extends BaseModel {
+class Cookie extends Model {
     constructor() {
         super(properties);
     }
-};
+}
 
 module.exports = { Cookie };

@@ -1,6 +1,7 @@
-extends ../_shared/base
-block content
+extends _shared/base
+block cookieContent
     form(action="/cookies", method="POST")
-        input(placeholder="Enter text", name="name")
+        input(placeholder="Enter name", name="name")
+        input(placeholder="Enter size", name="size" type="number")
         button
             | Submit

@@ -3,14 +3,16 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const { port, connectionString } = require('./config');
+
+const { MongoDb } = require('./db');
+
 const { ItemsController } = require('./controllers/items.controller');
 const { UsersController } = require('./controllers/users.controller');
 const { CookiesController } = require('./controllers/cookies.controller');
 
-const { BaseRouter } = require('./routers/base.router');
+const { routers, Router } = require('./routers');
 const { UsersRouter } = require('./routers/users.router');
-
-const { GenericDbData } = require('./data/generic.db.data');
 
 let app = express();
 
@@ -20,28 +22,32 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'pug');
 
 app.use('/static', express.static(path.join(__dirname, 'static')));
+app.use('/libs', express.static(path.join(__dirname, 'node_modules')));
+
+app.get('/', (req, res) => {
+    return res.render('home');
+});
 
 const initApp = async () => {
-    const { MongoClient } = require('mongodb');
-    let db = await MongoClient.connect('mongodb://localhost/items-2');
-    let { Item } = require('./models/item.model');
-    let itemsData = new GenericDbData(db, Item);
-    // let usersData = new GenericDbData(db, 'Users');
-    new BaseRouter('/items', new ItemsController(itemsData))
-        .attachToApp(app);
+    let dbProvider = new MongoDb();
+    let db = await dbProvider.connect(connectionString);
 
-    // new UsersRouter('/users', new UsersController(usersData))
-    //     .attachToApp(app);
-
-    // new BaseRouter('/cookies', new CookiesController())
-    //     .attachToApp(app);
-
-    app.get('/', (req, res) => {
-        return res.render('home');
-    });
+    routers.initWith(app)
+        .attach({
+            at: '/items',
+            router: new Router(new ItemsController(db)),
+        })
+        .attach({
+            at: '/users',
+            router: new UsersRouter(new UsersController(db)),
+        })
+        .attach({
+            at: '/cookies',
+            router: new Router(new CookiesController(db)),
+        });
 };
 
-const port = 3001;
-app.listen(port, () => console.log(`App runnig at :${port}`));
-
-initApp();
+initApp()
+    .then(() => {
+        app.listen(port, () => console.log(`App runnig at :${port}`));
+    });

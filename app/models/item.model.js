@@ -1,11 +1,9 @@
-const { BaseModel } = require('./base.model');
+const { Model } = require('./model');
 
-const properties = ['name', 'size'];
-
-class Item extends BaseModel {
+class Item extends Model {
     constructor() {
-        super(properties);
+        super(['text']);
     }
-};
+}
 
 module.exports = { Item };
