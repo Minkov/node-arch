@@ -1,6 +1,6 @@
-const { ModelController } = require('./model.controller');
+const { ModelController } = require('../base/model.controller');
 
-const { Cookie } = require('../models/cookie.model');
+const { Cookie } = require('../../models/cookie.model');
 
 class CookiesController extends ModelController {
     constructor(db) {
@@ -16,9 +16,7 @@ class CookiesController extends ModelController {
             (typeof model.size !== 'undefined' &&
                 !isNaN(+model.size)) &&
             (typeof model.name === 'string' &&
-             model.name.length > 4);
-
-        return isSizeValid && isNameString;
+             model.name.length >= 4);
     }
 }
 

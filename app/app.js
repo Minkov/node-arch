@@ -7,9 +7,11 @@ const { port, connectionString } = require('./config');
 
 const { MongoDb } = require('./db');
 
-const { ItemsController } = require('./controllers/items.controller');
-const { UsersController } = require('./controllers/users.controller');
-const { CookiesController } = require('./controllers/cookies.controller');
+const { ItemsController } = require('./controllers/views/items.controller');
+const { UsersController } = require('./controllers/views/users.controller');
+const { CookiesController } = require('./controllers/views/cookies.controller');
+const { CookiesApiController } =
+    require('./controllers/api/cookies.api.controller');
 
 const { routers, Router } = require('./routers');
 const { UsersRouter } = require('./routers/users.router');
@@ -44,6 +46,10 @@ const initApp = async () => {
         .attach({
             at: '/cookies',
             router: new Router(new CookiesController(db)),
+        })
+        .attach({
+            at: '/api/cookies',
+            router: new Router(new CookiesApiController(db)),
         });
 };
 

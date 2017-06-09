@@ -1,6 +1,6 @@
-const { ModelController } = require('./model.controller');
+const { ModelController } = require('../base/model.controller');
 
-const { Item } = require('../models/item.model');
+const { Item } = require('../../models/item.model');
 
 class ItemsController extends ModelController {
     constructor(db) {

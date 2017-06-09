@@ -1,8 +1,8 @@
-const { ModelController } = require('./model.controller');
+const { ModelController } = require('../base/model.controller');
 
-const { User } = require('../models/user.model');
+const { User } = require('../../models/user.model');
 
-const { validator } = require('../utils/validator');
+const { validator } = require('../../utils/validator');
 
 const VALID_CHARS =
     'qwertyuiopasdfghjklzxcvbnm1234567890_.QWERTYUIOPASDFGHJKLZXCVBBNM';

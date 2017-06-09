@@ -1,4 +1,4 @@
-const { Model } = require('./model');
+const { Model } = require('./base/model');
 
 const properties = ['name', 'size'];
 

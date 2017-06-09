@@ -4,12 +4,12 @@ class Model {
         this.constructor.properties = properties;
     }
 
-    get id() {
-        return this._id;
+    get _id() {
+        return this.id;
     }
 
-    set id(id) {
-        this._id = id;
+    set _id(id) {
+        this.id = id;
     }
 
     toDocument() {
@@ -21,6 +21,17 @@ class Model {
         doc._id = this.id;
 
         return doc;
+    }
+
+    toViewModel() {
+        const viewModel = { };
+        this.properties.forEach((prop) => {
+            viewModel[prop] = this[prop];
+        });
+
+        viewModel.id = this.id;
+
+        return viewModel;
     }
 
     static fromDocument(doc) {

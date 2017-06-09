@@ -1,3 +1,5 @@
+const { ObjectID } = require('mongodb');
+
 class GenericDbData {
     constructor(db, collectionName) {
         this.db = db;
@@ -10,7 +12,9 @@ class GenericDbData {
     }
 
     async getById(id) {
-        return this.collection.findOne({ _id: id });
+        console.log(id);
+        return this.collection
+            .findOne({ _id: ObjectID.createFromHexString(id) });
     }
 
     async search(props = {}) {

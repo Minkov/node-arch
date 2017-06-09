@@ -1,8 +1,10 @@
-const { BaseController } = require('./base.controller');
-const { ModelData } = require('../data/model.data');
-const { Model } = require('../models/model');
+const { BaseViewController, METHOD_TYPES } = require('./base.view.controller');
+const { ModelData } = require('../../data/model.data');
+const { Model } = require('../../models/base/model');
 
-class ModelController extends BaseController {
+const { compile } = require('pug');
+
+class ModelController extends BaseViewController {
     constructor(db) {
         super();
         this.ModelType = this.constructor.ModelType;
@@ -20,6 +22,26 @@ class ModelController extends BaseController {
         return ModelData;
     }
 
+    _getTemplateFor(ModelType, type) {
+        return `
+ul
+    for item in model.items
+        li
+            =JSON.stringify(item)
+`;
+    }
+
+    _compile(template, model) {
+        return compile(template)(model);
+    }
+
+    _render(res, type, model) {
+        const template = this._getTemplateFor(this.ModelType, type);
+        const html = this._compile(template, model);
+        console.log(html);
+        return res.send(html);
+    }
+
     async _getAll() {
         return this.data.getAll()
             .then((models) => models.map(
@@ -28,7 +50,8 @@ class ModelController extends BaseController {
     }
 
     async _getDetails(id) {
-        return this.ModelType.fromDocument(this.data.getById(id));
+        const doc = await this.data.getById(id);
+        return this.ModelType.fromDocument(doc);
     }
 
     async _create(reqModel) {
