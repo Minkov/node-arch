@@ -28,9 +28,10 @@ class Router {
             router = new express.Router();
         }
 
-        router.get('/', (req, res) => {
-            this.controller.listAll(req, res);
-        })
+        router
+            .get('/', (req, res) => {
+                this.controller.listAll(req, res);
+            })
             .get('/form', (req, res) => {
                 this.controller.getForm(req, res);
             })

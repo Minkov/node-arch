@@ -25,7 +25,7 @@ class BaseViewController extends BaseController {
             case METHOD_TYPES.all:
                 viewName = `${this.viewsDir}/all`;
                 break;
-            case METHOD_TYPES.create:
+            case METHOD_TYPES.details:
                 viewName = `${this.viewsDir}/details`;
                 break;
             case METHOD_TYPES.error:
@@ -37,7 +37,7 @@ class BaseViewController extends BaseController {
     }
 
     async getForm(req, res) {
-        return this._render(res, METHOD_TYPES.form, model);
+        return this._render(res, METHOD_TYPES.form);
     }
 
     async _sendListAllResponse(res, model) {

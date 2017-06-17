@@ -1,7 +1,7 @@
 class Model {
     constructor(properties = []) {
         this.properties = properties;
-        this.constructor.properties = properties;
+        // this.constructor.properties = properties;
     }
 
     get _id() {

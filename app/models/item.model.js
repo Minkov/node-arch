@@ -1,8 +1,14 @@
 const { Model } = require('./base/model');
 
+const properties = ['text'];
+
 class Item extends Model {
     constructor() {
-        super(['text']);
+        super(properties);
+    }
+
+    static get properties() {
+        return properties;
     }
 }
 

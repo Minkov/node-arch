@@ -1,14 +1,16 @@
 const { Model } = require('./base/model');
 
-const properties = ['username', 'password', 'email'];
-
 const hash = (str) => {
     return '!*!*!*!*!' + str + '!';
 };
-
+const properties = ['username', 'password', 'email'];
 class User extends Model {
     constructor() {
         super(properties);
+    }
+
+    static get properties() {
+        return properties;
     }
 
     static fromViewModel(viewModel) {

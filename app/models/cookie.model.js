@@ -6,6 +6,10 @@ class Cookie extends Model {
     constructor() {
         super(properties);
     }
+
+    static get properties() {
+        return properties;
+    }
 }
 
 module.exports = { Cookie };

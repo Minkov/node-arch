@@ -22,13 +22,49 @@ class ModelController extends BaseViewController {
         return ModelData;
     }
 
-    _getTemplateFor(ModelType, type) {
-        return `
-ul
+    _getTemplateForAll() {
+        let modelHtml = `
+ul.${this.ModelType.name.toLowerCase()}s
     for item in model.items
-        li
-            =JSON.stringify(item)
+        li`;
+        this.ModelType.properties.forEach((property) => {
+            const className =
+                `${this.ModelType.name.toLowerCase()}-${property}`;
+            modelHtml += `
+            p.${className}
+                | ${property}: 
+                =item["${property}"]
 `;
+        });
+        return modelHtml;
+    }
+
+    _getTemplateForForm() {
+        const modelName = this.ModelType.name.toLowerCase();
+        let modelHtml = `
+form(method="POST", action="/${modelName}s")
+`;
+
+        this.ModelType.properties.forEach((property) => {
+            modelHtml += `
+    label
+        input(name="${property}" placeholder="Enter ${property}")
+`;
+        });
+        modelHtml += `
+    button.btn.btn-success
+        | Create
+`;
+        return modelHtml;
+    }
+
+    _getTemplateFor(type) {
+        if (type === METHOD_TYPES.all) {
+            return this._getTemplateForAll();
+        } else if (type === METHOD_TYPES.form) {
+            return this._getTemplateForForm();
+        }
+        return '';
     }
 
     _compile(template, model) {
@@ -36,9 +72,9 @@ ul
     }
 
     _render(res, type, model) {
-        const template = this._getTemplateFor(this.ModelType, type);
+        const template = this._getTemplateFor(type);
+        console.log(model);
         const html = this._compile(template, model);
-        console.log(html);
         return res.send(html);
     }
 
